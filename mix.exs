@@ -1,9 +1,9 @@
-defmodule Kbonboarding.MixProject do
+defmodule Kb.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :kbonboarding,
+      app: :Kb,
       version: "0.1.0",
       elixir: "~> 1.9",
       start_permanent: Mix.env() == :prod,
@@ -15,7 +15,7 @@ defmodule Kbonboarding.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {Kbonboarding.Application, []}
+      mod: {Kb.Application, []}
     ]
   end
 
