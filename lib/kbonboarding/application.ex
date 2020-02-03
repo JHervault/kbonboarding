@@ -7,8 +7,8 @@ defmodule Kb.Application do
 
   def start(_type, _args) do
     children = [
-      # Starts a worker by calling: Kb.Worker.start_link(arg)
-      # {Kb.Worker, arg}
+      Kb.DatabaseSupervisor,
+      Plug.Adapters.Cowboy.child_spec(:http,Kb.Router, [], [port: 4001])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

@@ -24,6 +24,14 @@ defmodule Kb.Database do
     GenServer.call(pid, {:delete, key})
   end
 
+  def search(pid, criteria) do
+    GenServer.call(pid, {:search, criteria})
+  end
+
+  def list(pid) do
+    GenServer.call(pid, {:list})
+  end
+
   @impl true
   def handle_call({:put, key, value}, _from, state) do
     :ets.insert(:store, {key, value})
@@ -40,5 +48,16 @@ defmodule Kb.Database do
     :ets.delete(:store, key)
     {:reply, :ok, state}
   end
+
+  @impl true
+  def handle_call({:search, criteria}, _from, state) do
+    {:reply, Enum.filter(:ets.tab2list(:store), fn {key, value} -> String.contains?(key, criteria) end) , state}
+  end
+
+  @impl true
+  def handle_call({:list}, _from, state) do
+    {:reply, Enum.map(:ets.tab2list(:store), fn {key, value} -> key end), state}
+  end
+
 
 end
